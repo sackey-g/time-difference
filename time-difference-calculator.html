@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ダークモード時間差計算機</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        .container {
+            background-color: #1e1e1e;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255,255,255,0.1);
+            width: 300px;
+        }
+        h1 {
+            text-align: center;
+            color: #ffffff;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .input-group {
+            margin-bottom: 1rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #b0b0b0;
+        }
+        select {
+            width: 45%;
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 1px solid #444;
+            border-radius: 4px;
+            margin-right: 5%;
+            background-color: #2a2a2a;
+            color: #e0e0e0;
+        }
+        #result {
+            margin-top: 1.5rem;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ダークモード時間差計算機</h1>
+        <div class="input-group">
+            <label>時間 1:</label>
+            <select id="hour1"></select>
+            <select id="minute1"></select>
+        </div>
+        <div class="input-group">
+            <label>時間 2:</label>
+            <select id="hour2"></select>
+            <select id="minute2"></select>
+        </div>
+        <div id="result">時間差: --時間 --分</div>
+    </div>
+
+    <script>
+        function populateDropdowns() {
+            const hours = document.querySelectorAll('select[id^="hour"]');
+            const minutes = document.querySelectorAll('select[id^="minute"]');
+
+            for (let i = 0; i < 24; i++) {
+                const hourOption = document.createElement('option');
+                hourOption.value = i.toString().padStart(2, '0');
+                hourOption.textContent = i.toString().padStart(2, '0');
+                hours.forEach(select => select.appendChild(hourOption.cloneNode(true)));
+            }
+
+            for (let i = 0; i < 60; i++) {
+                const minuteOption = document.createElement('option');
+                minuteOption.value = i.toString().padStart(2, '0');
+                minuteOption.textContent = i.toString().padStart(2, '0');
+                minutes.forEach(select => select.appendChild(minuteOption.cloneNode(true)));
+            }
+        }
+
+        function setCurrentTime() {
+            const now = new Date();
+            document.getElementById('hour1').value = now.getHours().toString().padStart(2, '0');
+            document.getElementById('minute1').value = now.getMinutes().toString().padStart(2, '0');
+        }
+
+        function calculateTimeDifference() {
+            const hour1 = document.getElementById('hour1').value;
+            const minute1 = document.getElementById('minute1').value;
+            const hour2 = document.getElementById('hour2').value;
+            const minute2 = document.getElementById('minute2').value;
+
+            const date1 = new Date(2000, 0, 1, hour1, minute1);
+            const date2 = new Date(2000, 0, 1, hour2, minute2);
+
+            let diff = Math.abs(date2 - date1);
+            const hours = Math.floor(diff / 3600000);
+            diff %= 3600000;
+            const minutes = Math.floor(diff / 60000);
+
+            const result = `時間差: ${hours}時間 ${minutes}分`;
+            document.getElementById('result').textContent = result;
+        }
+
+        populateDropdowns();
+        setCurrentTime();
+        calculateTimeDifference();
+
+        document.querySelectorAll('select').forEach(select => {
+            select.addEventListener('change', calculateTimeDifference);
+        });
+    </script>
+</body>
+</html>
