@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ダークモード時間差計算機</title>
+    <title>睡眠時間計算機</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -57,7 +57,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>ダークモード時間差計算機</h1>
+        <h1>睡眠時間計算機</h1>
         <div class="input-group">
             <label>時間 1:</label>
             <select id="hour1"></select>
@@ -68,7 +68,7 @@
             <select id="hour2"></select>
             <select id="minute2"></select>
         </div>
-        <div id="result">時間差: --時間 --分</div>
+        <div id="result">睡眠時間: --時間 --分</div>
     </div>
 
     <script>
@@ -111,7 +111,7 @@
             diff %= 3600000;
             const minutes = Math.floor(diff / 60000);
 
-            const result = `時間差: ${hours}時間 ${minutes}分`;
+            const result = `睡眠時間: ${hours}時間 ${minutes}分`;
             document.getElementById('result').textContent = result;
         }
 
